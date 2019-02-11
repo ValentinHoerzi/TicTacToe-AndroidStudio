@@ -1,5 +1,6 @@
 package tictactoe.vhoerzi16.tictactoe;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,6 +8,9 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.app.PendingIntent.getActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,24 +25,43 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeUI();
-        onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+
+            outState.putString("currentPlayer",currentPlayer.toString());
+            outState.putString("availableFields",availableFields.toString());
+
+            String[][] currentButtonState = checkButtonState();
+            for(int i = 0; i < currentButtonState.length; i++){
+                outState.putStringArray("btnRow_"+(i+1),currentButtonState[i]);
+            }
+
         super.onSaveInstanceState(outState);
-
-        String[][] currentButtonState = checkButtonState();
-        for(int i = 0; i < currentButtonState.length; i++){
-            outState.putStringArray("Row_"+(i+1),currentButtonState[i]);
-        }
-
     }
 
     @Override
-    protected  void  onRestoreInstanceState(Bundle savedInstanceState){
+    protected  void  onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+        currentPlayer = Player.valueOf(savedInstanceState.get("currentPlayer").toString().toUpperCase());
+        availableFields = new Integer(Integer.parseInt((String)savedInstanceState.get("availableFields")));
+
+        displayAvailableFields.setText(availableFields.toString());
+        displayCurrentPlayer.setText(currentPlayer.toString().toLowerCase());
+
+
+        String[][] emButts = new String[3][3];
+
+        int coutn = 0;
+        for(String key : savedInstanceState.keySet()){
+            if(key.equals("btnRow_1")||key.equals("btnRow_2")||key.equals("btnRow_3")){
+                emButts[coutn] = (String[]) savedInstanceState.get(key);
+                coutn++;
+            }
+        }
+        setButtonState(emButts);
     }
 
 
@@ -56,9 +79,27 @@ public class MainActivity extends AppCompatActivity {
         displayCurrentPlayer(currentPlayer);
     }
 
+    private int[][] tableToArray(TableLayout table){
+        int[][] currentStat = new int[3][3];
+        for(int i = 0; i < tableLayout.getChildCount(); i++){
+            TableRow currentRow = (TableRow)tableLayout.getChildAt(i);
+            for(int j = 0; j < currentRow.getChildCount(); j++){
+                Button currentButton = (Button) currentRow.getChildAt(j);
+                if(currentButton.getText().toString().equals("X")){
+                    currentStat[i][j] = 1;
+                }else if(currentButton.getText().toString().equals("O")){
+                    currentStat[i][j] = -1;
+                }else{
+                    currentStat[i][j] = 0;
+                }
+            }
+        }
+        return currentStat;
+    }
+
     public void btnClicked(View view) {
         Button currentBtn = (Button) view;
-        if(currentBtn.getText().equals("")){
+        if(currentBtn.getText().equals(" ")){
             if(currentPlayer.equals(Player.PLAYER_1)){
                     currentBtn.setText("X");
                 currentPlayer = Player.PLAYER_2;
@@ -68,8 +109,14 @@ public class MainActivity extends AppCompatActivity {
             }
             refreshCount();
         }else{
-            //TODO toast
+            Context context = getApplicationContext();
+            CharSequence text = "Junge siagst du ned das do scho wos is?";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
+
         displayCurrentPlayer(currentPlayer);
     }
 
@@ -91,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
                 currentStat[i][j] = currentButton.getText().toString();
             }
         }
-        return null;
+        return currentStat;
+    }
+
+    private void setButtonState(String[][] btnState){
+        for(int i = 0; i < tableLayout.getChildCount(); i++){
+            TableRow currentRow = (TableRow)tableLayout.getChildAt(i);
+            for(int j = 0; j < currentRow.getChildCount(); j++){
+                Button currentButton = (Button) currentRow.getChildAt(j);
+                currentButton.setText(btnState[i][j]);
+            }
+        }
     }
 }

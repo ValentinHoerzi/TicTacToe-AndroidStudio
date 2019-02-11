@@ -23,25 +23,28 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/0.1btn"
+                    android:id="@+id/btn0.1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/0.2btn"
+                    android:id="@+id/btn0.2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/0.3btn"
+                    android:id="@+id/btn0.3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
             </TableRow>
 
             <TableRow
@@ -50,25 +53,28 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/1.1btn"
+                    android:id="@+id/btn1.1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/1.2btn"
+                    android:id="@+id/btn1.2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/1.3btn"
+                    android:id="@+id/btn1.3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
             </TableRow>
 
             <TableRow
@@ -77,25 +83,28 @@
                 android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/2.1btn"
+                    android:id="@+id/btn2.1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/2.2btn"
+                    android:id="@+id/btn2.2b"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
                 <Button
-                    android:id="@+id/2.3btn"
+                    android:id="@+id/btn2.3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="btnClicked" />
+                    android:onClick="btnClicked"
+                    android:text=" "/>
 
             </TableRow>
 
