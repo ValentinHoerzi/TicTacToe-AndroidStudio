@@ -11,7 +11,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.app.PendingIntent.getActivity;
+import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,10 +123,27 @@ public class MainActivity extends AppCompatActivity {
             toast.show();
         }
 
+        int solution = Model.determineWinner(tableToArray(tableLayout));
+        if(solution!=(-2)){
+            CharSequence text="";
+            if(solution==1){//Player 1 won
+                text="Player 1 won!";
+            }else if(solution==(-1)){//Player 2 won
+                text="Player 2 won!";
+            }else{//Draw
+                text="It's a draw!";
+            }
+            Context context = getApplicationContext();
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            resestGame();
+        }
         displayCurrentPlayer(currentPlayer);
     }
 
-    private void displayCurrentPlayer(Player p) {
+    private void displayCurrentPlayer(@NotNull final Player p) {
         displayCurrentPlayer.setText(p.toString().toLowerCase());
     }
 
@@ -147,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         return currentStat;
     }
 
-    private void setButtonState(String[][] btnState){
+    private void setButtonState(@NotNull String[][] btnState){
         for(int i = 0; i < tableLayout.getChildCount(); i++){
             TableRow currentRow = (TableRow)tableLayout.getChildAt(i);
             for(int j = 0; j < currentRow.getChildCount(); j++){
@@ -157,7 +174,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void resestGame(){availableFields = new Integer(9);
+    private void resestGame(){
+        availableFields = new Integer(9);
         displayAvailableFields.setText(String.valueOf(availableFields.intValue()));
         if(Math.random() > 0.5){
             currentPlayer = Player.PLAYER_1;
@@ -165,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
             currentPlayer = Player.PLAYER_2;
         }
         displayCurrentPlayer(currentPlayer);
-
 
         for(int i = 0; i < tableLayout.getChildCount(); i++){
             TableRow currentRow = (TableRow)tableLayout.getChildAt(i);
