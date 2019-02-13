@@ -3,6 +3,7 @@ package tictactoe.vhoerzi16.tictactoe;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -19,9 +20,11 @@ public class MainActivity extends AppCompatActivity {
     Player currentPlayer;
     Integer availableFields;
     TableLayout tableLayout;
+    private static final String TAG = "TicTacToe Demo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,"onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeUI();
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-
+        Log.i(TAG,"--- onSaveInstanceState");
             outState.putString("currentPlayer",currentPlayer.toString());
             outState.putString("availableFields",availableFields.toString());
 
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected  void  onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.i(TAG,"--- onRestoreInstanceState");
         super.onRestoreInstanceState(savedInstanceState);
 
         currentPlayer = Player.valueOf(savedInstanceState.get("currentPlayer").toString().toUpperCase());
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initializeUI(){
+        Log.i(TAG, "--- initializeUI");
         tableLayout = findViewById(R.id.tableLayout);
         displayAvailableFields = findViewById(R.id.textViewDisplayAvailableFields);
         displayCurrentPlayer = findViewById(R.id.textViewDisplayCurrentPlayer);
@@ -98,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnClicked(View view) {
+        Log.v(TAG,currentPlayer +"-> btnClicked");
         Button currentBtn = (Button) view;
         if(currentBtn.getText().equals(" ")){
             if(currentPlayer.equals(Player.PLAYER_1)){
@@ -147,6 +153,25 @@ public class MainActivity extends AppCompatActivity {
             for(int j = 0; j < currentRow.getChildCount(); j++){
                 Button currentButton = (Button) currentRow.getChildAt(j);
                 currentButton.setText(btnState[i][j]);
+            }
+        }
+    }
+
+    private void resestGame(){availableFields = new Integer(9);
+        displayAvailableFields.setText(String.valueOf(availableFields.intValue()));
+        if(Math.random() > 0.5){
+            currentPlayer = Player.PLAYER_1;
+        }else{
+            currentPlayer = Player.PLAYER_2;
+        }
+        displayCurrentPlayer(currentPlayer);
+
+
+        for(int i = 0; i < tableLayout.getChildCount(); i++){
+            TableRow currentRow = (TableRow)tableLayout.getChildAt(i);
+            for(int j = 0; j < currentRow.getChildCount(); j++){
+                Button currentButton = (Button) currentRow.getChildAt(j);
+                currentButton.setText(" ");
             }
         }
     }
